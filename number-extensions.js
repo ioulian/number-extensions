@@ -321,6 +321,10 @@
  * @param  {Boolean} runTests  Run tests on script load
  */
 (function (namespace, runTests) {
+  if (runTests !== true) {
+    return;
+  }
+
   function assert(result, requiredResult) {
     console.log(result === requiredResult, result, requiredResult);
   }
@@ -352,4 +356,4 @@
   console.log('Power:');
 
   assert(2..pow(3), 8);
-}(window.Site, true));
+}(window.Site, false));
