@@ -227,13 +227,36 @@
    * > 8
    *
    * @param  {Number} number Number to modify
-   * @param  {Number} power Power
+   * @param  {Number} power  Power
    * @return {Number}        Number to apply power to
    */
   namespace.pow = function (number, power) {
     return Math.pow(number, power);
   };
-}(window.Site));
+
+  /**
+   * Get "center" number.
+   *
+   * Use cases:
+   *
+   * 1: Getting an index of center item if you have total number of items
+   * showItemWithIndex(getNumberOfItems().wholeCenter(true));
+   *
+   * Usage and examples:
+   * // Useful for 0-based indexes
+   * console.log(5..wholeCenter(true))
+   * > 2
+   * console.log(5..wholeCenter(false))
+   * > 3
+   *
+   * @param  {Number} number Number to modify
+   * @param  {Number} power  Usefull if you need an index for 0-based array from a number of items
+   * @return {Number}        "Centered" number
+   */
+  namespace.wholeCenter = function (number, useFloor) {
+    return Math[useFloor ? 'floor' : 'ceil'](number / 2);
+  };
+}(window));
 
 /**
  * Add Number extensions to Number.prototype
@@ -310,8 +333,14 @@
         return namespace.pow(this, power);
       };
     }
+
+    if (Number.prototype.wholeCenter === undefined || overwriteGlobals === true) {
+      Number.prototype.wholeCenter = function (useFloor) {
+        return namespace.wholeCenter(this, useFloor);
+      };
+    }
   }
-}(window.Site, true, false));
+}(window, true, false));
 
 /**
  * Tests for Number extensions
@@ -356,4 +385,4 @@
   console.log('Power:');
 
   assert(2..pow(3), 8);
-}(window.Site, false));
+}(window, false));
