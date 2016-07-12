@@ -236,6 +236,20 @@ define(function () {
     };
 
     /**
+     * Shortcut to Math.sqrt
+     *
+     * Usage and examples:
+     * console.log(16..sqrt())
+     * > 4
+     *
+     * @param  {Number} number Number to modify
+     * @return {Number}        Number to apply power to
+     */
+    module.sqrt = function (number) {
+      return Math.sqrt(number);
+    };
+
+    /**
      * Get "center" number.
      *
      * Use cases:
@@ -352,6 +366,12 @@ define(function () {
       if (Number.prototype.pow === undefined || overwriteGlobals === true) {
         Number.prototype.pow = function (power) {
           return module.pow(this, power);
+        };
+      }
+
+      if (Number.prototype.sqrt === undefined || overwriteGlobals === true) {
+        Number.prototype.sqrt = function () {
+          return module.sqrt(this);
         };
       }
 
