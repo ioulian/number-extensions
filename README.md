@@ -1,4 +1,6 @@
-# number-extensions ![Mocha tests status](https://raw.githubusercontent.com/ioulian/number-extensions/master/tests-badge.svg)
+# number-extensions
+![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Mocha tests](https://img.shields.io/badge/tests-24%2F24-brightgreen.svg)
+
 Collection of useful number functions to simplify your code. Written in and for ES6, can be compiled with Babel.js.
 
 ## Install
