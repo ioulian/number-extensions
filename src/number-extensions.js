@@ -28,7 +28,7 @@
  *
  * this.currentResultIndex = this.currentSlide.cycle(1, [-1, this.numberOfResults - 1]);
  * if (this.currentResultIndex === -1) {
- *   this.resulsts.deselectAll();
+ *   this.results.deselectAll();
  * }
  *
  *
@@ -41,13 +41,18 @@
  * > -2
  *
  *
- * @param  {Number} number  Number to modfiy
+ * @param  {Number} number  Number to modify
  * @param  {Number} offset  Offset by which to cycle the number
  * @param  {Number} between Min and max values between to cycle
  * @return {Number}         Cycled number
  */
 export function cycle (number, offset, between) {
-  var newNumber, betweenDifference = Math.abs(between[0] - (between[1] + 1));
+  var newNumber,
+    betweenDifference = Math.abs(between[0] - (between[1] + 1));
+
+  if (typeof offset !== 'number' || (offset % 1) !== 0) {
+    throw new Error('Only integers are supported');
+  }
 
   newNumber = number + offset;
   newNumber = newNumber % betweenDifference;
@@ -61,7 +66,7 @@ export function cycle (number, offset, between) {
   }
 
   return newNumber;
-};
+}
 
 /**
  * Scales an input number (between 0 and 1) to a given min and max values
@@ -71,8 +76,8 @@ export function cycle (number, offset, between) {
  * 1: Get a random coordinate in a square with dimensions {x:40,y:50,width:20,height:20}
  * var square = {x:40,y:50,width:20,height:20};
  * console.log({
- *   x: Math.random.scale(square.x, square.x + square.width),
- *   y: Math.random.scale(square.y, square.y + square.height)
+ *   x: Math.random().scale(square.x, square.x + square.width),
+ *   y: Math.random().scale(square.y, square.y + square.height)
  * })
  *
  * 2: Draw a progressbar on x = 50 and with max x = 150 (100px width)
@@ -91,7 +96,7 @@ export function cycle (number, offset, between) {
  */
 export function scale (number, min, max) {
   return number * (max - min) + min;
-};
+}
 
 /**
  * Get a random number with maximum value
@@ -105,7 +110,7 @@ export function scale (number, min, max) {
  */
 export function random (number) {
   return number * Math.random();
-};
+}
 
 /**
  * Shortcut to Math.floor
@@ -119,7 +124,7 @@ export function random (number) {
  */
 export function floor (number) {
   return Math.floor(number);
-};
+}
 
 /**
  * Shortcut to Math.round
@@ -133,7 +138,7 @@ export function floor (number) {
  */
 export function round (number) {
   return Math.round(number);
-};
+}
 
 /**
  * Shortcut to Math.ceil
@@ -147,7 +152,7 @@ export function round (number) {
  */
 export function ceil (number) {
   return Math.ceil(number);
-};
+}
 
 /**
  * Clamps a number
@@ -167,7 +172,7 @@ export function ceil (number) {
  */
 export function clamp (number, min, max) {
   return Math.min(Math.max(number, min), max);
-};
+}
 
 /**
  * Converts degrees to radians
@@ -181,7 +186,7 @@ export function clamp (number, min, max) {
  */
 export function toRad (number) {
   return number * Math.PI / 180;
-};
+}
 
 /**
  * Converts radians to degrees
@@ -195,7 +200,7 @@ export function toRad (number) {
  */
 export function toDeg (number) {
   return number * 180 / Math.PI;
-};
+}
 
 /**
  * Shortcut to Math.abs
@@ -209,7 +214,7 @@ export function toDeg (number) {
  */
 export function abs (number) {
   return Math.abs(number);
-};
+}
 
 /**
  * Shortcut to Math.pow
@@ -224,7 +229,7 @@ export function abs (number) {
  */
 export function pow (number, power) {
   return Math.pow(number, power);
-};
+}
 
 /**
  * Shortcut to Math.sqrt
@@ -238,7 +243,7 @@ export function pow (number, power) {
  */
 export function sqrt (number) {
   return Math.sqrt(number);
-};
+}
 
 /**
  * Get "center" number.
@@ -256,12 +261,12 @@ export function sqrt (number) {
  * > 3
  *
  * @param  {Number} number Number to modify
- * @param  {Number} power  Usefull if you need an index for 0-based array from a number of items
+ * @param  {Number} useFloor  Useful if you need an index for 0-based array from a number of items
  * @return {Number}        "Centered" number
  */
 export function wholeCenter (number, useFloor) {
   return Math[useFloor ? 'floor' : 'ceil'](number / 2);
-};
+}
 
 /**
  * Loops the value between 0 and a maximum number
@@ -281,9 +286,10 @@ export function wholeCenter (number, useFloor) {
  * @return {Number}        Looped number
  */
 export function loop (number, max) {
-  var mod = this.abs(number % max);
+  var mod = Math.abs(number % max);
+
   if (number > max) {
-    return 0 + mod;
+    return mod;
   }
 
   if (number < 0) {
@@ -291,90 +297,90 @@ export function loop (number, max) {
   }
 
   return number;
-};
+}
 
-export function setNumberExtensionsGlobals (overwriteGlobals) {
-  if (Number.prototype.cycle === undefined || overwriteGlobals === true) {
+export function setGlobals (overwriteGlobals = false) {
+  if (typeof Number.prototype.cycle === 'undefined' || overwriteGlobals === true) {
     Number.prototype.cycle = function (offset, between) {
       return cycle(this, offset, between);
     };
   }
 
-  if (Number.prototype.scale === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.scale === 'undefined' || overwriteGlobals === true) {
     Number.prototype.scale = function (min, max) {
       return scale(this, min, max);
     };
   }
 
-  if (Number.prototype.random === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.random === 'undefined' || overwriteGlobals === true) {
     Number.prototype.random = function () {
       return random(this);
     };
   }
 
-  if (Number.prototype.floor === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.floor === 'undefined' || overwriteGlobals === true) {
     Number.prototype.floor = function () {
       return floor(this);
     };
   }
 
-  if (Number.prototype.round === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.round === 'undefined' || overwriteGlobals === true) {
     Number.prototype.round = function () {
       return round(this);
     };
   }
 
-  if (Number.prototype.ceil === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.ceil === 'undefined' || overwriteGlobals === true) {
     Number.prototype.ceil = function () {
       return ceil(this);
     };
   }
 
-  if (Number.prototype.clamp === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.clamp === 'undefined' || overwriteGlobals === true) {
     Number.prototype.clamp = function (min, max) {
       return clamp(this, min, max);
     };
   }
 
-  if (Number.prototype.toRad === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.toRad === 'undefined' || overwriteGlobals === true) {
     Number.prototype.toRad = function () {
       return toRad(this);
     };
   }
 
-  if (Number.prototype.toDeg === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.toDeg === 'undefined' || overwriteGlobals === true) {
     Number.prototype.toDeg = function () {
       return toDeg(this);
     };
   }
 
-  if (Number.prototype.abs === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.abs === 'undefined' || overwriteGlobals === true) {
     Number.prototype.abs = function () {
       return abs(this);
     };
   }
 
-  if (Number.prototype.pow === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.pow === 'undefined' || overwriteGlobals === true) {
     Number.prototype.pow = function (power) {
       return pow(this, power);
     };
   }
 
-  if (Number.prototype.sqrt === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.sqrt === 'undefined' || overwriteGlobals === true) {
     Number.prototype.sqrt = function () {
       return sqrt(this);
     };
   }
 
-  if (Number.prototype.wholeCenter === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.wholeCenter === 'undefined' || overwriteGlobals === true) {
     Number.prototype.wholeCenter = function (useFloor) {
       return wholeCenter(this, useFloor);
     };
   }
 
-  if (Number.prototype.loop === undefined || overwriteGlobals === true) {
+  if (typeof Number.prototype.loop === 'undefined' || overwriteGlobals === true) {
     Number.prototype.loop = function (max) {
       return loop(this, max);
     };
   }
-};
+}
