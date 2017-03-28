@@ -6,16 +6,16 @@ Collection of useful number functions to simplify your code. Written in and for 
 ## Install
 
 ```bash
-    # npm coming soon, for now, just clone the repo
+# npm coming soon, for now, just clone the repo
 ```
 
 ## Usage
 
 ### Function usage
 ```javascript
-    import { loop } from 'number-extensions';
-    console.log(loop(400, 360))
-    // > 40
+import { loop } from 'number-extensions';
+console.log(loop(400, 360))
+// > 40
 ```
 
 ### Globals usage
@@ -23,17 +23,17 @@ Collection of useful number functions to simplify your code. Written in and for 
 Keep in mind that extending native objects is not a good idea, but can simplify your code if used with caution.
 
 ```javascript
-    import { setGlobals } from 'number-extensions';
-    setGlobals();
-    
-    400..loop(360) // or (400).loop(360)
-    // > 40
+import { setGlobals } from 'number-extensions';
+setGlobals();
+
+400..loop(360) // or (400).loop(360)
+// > 40
 ```
 
 By default setGlobals() does not overwrite default prototype functions if they exist, but if you really want it, you can pass a force parameter.
 
 ```javascript
-    setGlobals(true);
+setGlobals(true);
 ```
 
 ## Functions
@@ -42,77 +42,79 @@ These are the functions that are included. Please read the comments on how and w
 
 ### Cycle
 ```javascript
-    console.log(1..cycle(3, [-2, 3]))
+console.log(1..cycle(3, [-2, 3]))
 ```
 
 ### scale
 ```javascript
-    console.log(0.75.scale(50, 150))
+console.log(0.75.scale(50, 150))
 ```
     
-### random`
+### random
 ```javascript
-    console.log(50..random())
+console.log(50..random())
 ```
     
 ### floor
 ```javascript
-    console.log(3.4.floor())
+console.log(3.4.floor())
 ```
     
-### round`
+### round
 ```javascript
-    console.log(3.4.round())
+console.log(3.4.round())
 ```
     
-### ceil``
+### ceil
 ```javascript
-    console.log(3.4.ceil())
+console.log(3.4.ceil())
 ````
     
-### clamp`
+### clamp
 ```javascript
-    console.log(-4..clamp(0, 100));
+console.log(-4..clamp(0, 100));
 ```
     
 ### toRad
 ```javascript
-    console.log(90..toRad())
+console.log(90..toRad())
 ```
     
 ### toDeg
 ```javascript
-    console.log(1.5707963267948966.toDeg())
+console.log(1.5707963267948966.toDeg())
 ```
     
 ### abs
 ```javascript
-    console.log(-1..abs())
+console.log(-1..abs())
 ```
     
 ### pow
 ```javascript
-    console.log(2..pow(3))
+console.log(2..pow(3))
 ```
     
 ### sqrt
 ```javascript
-    console.log(16..sqrt())
+console.log(16..sqrt())
 ```
     
 ### wholeCenter
 ```javascript
-    console.log(5..wholeCenter(true))
+console.log(5..wholeCenter(true))
 ```
     
 ### loop
 ```javascript
-    console.log(400..loop(360))
+console.log(400..loop(360))
 ```
 
 ## Tests
 
-    npm test
+```bash
+npm test
+```
 
 --- 
 
